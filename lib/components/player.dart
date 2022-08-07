@@ -13,7 +13,10 @@ class Player extends SpriteAnimationComponent with HasGameRef {
   late final SpriteAnimation _runLeftAnimation;
   late final SpriteAnimation _standingAnimation;
 
+  late final SpriteAnimation _arghAnimation;
+
   Direction direction = Direction.none;
+  bool isArgh = false;
 
   Player() : super(size: Vector2.all(42));
 
@@ -29,6 +32,7 @@ class Player extends SpriteAnimationComponent with HasGameRef {
     super.update(dt);
 
     movePlayer(dt);
+    expressionsPlater();
   }
 
   Future<void> _loadSpriteSheet() async {
@@ -47,6 +51,9 @@ class Player extends SpriteAnimationComponent with HasGameRef {
         spriteSheet.createAnimation(row: 3, stepTime: _animationSpeed, to: 3);
     _standingAnimation =
         spriteSheet.createAnimation(row: 0, stepTime: _animationSpeed, to: 1);
+
+    _arghAnimation =
+        spriteSheet.createAnimation(row: 8, stepTime: _animationSpeed, to: 1);
   }
 
   void movePlayer(double dt) {
@@ -70,6 +77,12 @@ class Player extends SpriteAnimationComponent with HasGameRef {
       case Direction.none:
         animation = _standingAnimation;
         break;
+    }
+  }
+
+  void expressionsPlater() {
+    if (isArgh) {
+      animation = _arghAnimation;
     }
   }
 }
